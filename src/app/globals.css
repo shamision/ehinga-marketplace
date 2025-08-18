@@ -1,0 +1,60 @@
+@import "tailwindcss";
+
+/* Tailwind v4 design tokens used by components (bg-background, text-foreground, etc.) */
+@theme {
+  --color-background: #0f172a; /* slate-900 */
+  --color-foreground: #e2e8f0; /* slate-200 */
+
+  --color-card: #1f2937; /* slate-800 */
+  --color-card-foreground: #e5e7eb; /* gray-200 */
+
+  --color-popover: #1f2937;
+  --color-popover-foreground: #e5e7eb;
+
+  --color-primary: #2563eb; /* blue-600 */
+  --color-primary-foreground: #ffffff;
+
+  --color-secondary: #1e293b; /* slate-800-ish */
+  --color-secondary-foreground: #e2e8f0;
+
+  --color-muted: #1f2937; /* slate-800 */
+  --color-muted-foreground: #94a3b8; /* slate-400 */
+
+  --color-accent: #1f2937;
+  --color-accent-foreground: #e2e8f0;
+
+  --color-destructive: #ef4444; /* red-500 */
+  --color-destructive-foreground: #ffffff;
+
+  --color-border: #334155; /* slate-700 */
+  --color-input: #334155;
+  --color-ring: #3b82f6; /* blue-500 */
+}
+
+html,
+body {
+  padding: 0;
+  margin: 0;
+  @apply bg-background text-foreground;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #1e293b;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #475569;
+  border-radius: 3px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #64748b;
+}
