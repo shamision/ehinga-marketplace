@@ -6,7 +6,6 @@ import { usePathname } from 'next/navigation'
 import { 
   BarChart3, 
   ShoppingCart, 
-  MapPin,
   Calendar,
   Settings,
   HelpCircle,
@@ -38,7 +37,7 @@ const navigation = [
   }
 ]
 
-export function Sidebar({ className }: SidebarProps) {
+export function Sidebar({ }: SidebarProps) {
   const pathname = usePathname()
   return (
     <div 

@@ -1,6 +1,6 @@
 import React from 'react'
 import { Sidebar } from '@/components/layout/sidebar'
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card'
+import { Card, CardContent, CardHeader } from '@/components/ui/card'
 import { Button } from '@/components/ui/button'
 import { Search, Filter, Plus } from 'lucide-react'
 
