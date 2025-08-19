@@ -1,0 +1,411 @@
+{
+    "marketplace": {
+      "name": "e-Hinga Marketplace",
+      "description": "Agricultural marketplace platform for connecting farmers, producers, and buyers in Rwanda",
+      "scope": "Multi-Seller Agricultural Marketplace",
+      "geographic_coverage": "Rwanda (29 out of 30 districts)",
+      "target_users": ["Producers/Farmers", "Buyers", "World Vision Staff Admins"],
+      
+      "product_categories": [
+        {
+          "id": "grains",
+          "name": "Grains",
+          "description": "Maize, wheat, rice, and other grains",
+          "icon": "🌾",
+          "products": [
+            {
+              "id": "1",
+              "name": "Maize",
+              "category": "Grains",
+              "price": 300,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 1200,
+              "available_quantity": 1200,
+              "producer": "Kigali Farmers Cooperative",
+              "location": "Kigali City",
+              "province": "Kigali City",
+              "status": "available",
+              "description": "Fresh organic maize harvested this season. High quality grain suitable for both human consumption and animal feed.",
+              "image": "��",
+              "min_order": 10,
+              "max_order": 500,
+              "harvest_date": "2024-08-15",
+              "quality": "premium",
+              "features": ["organic", "fresh", "human_consumption", "animal_feed"]
+            },
+            {
+              "id": "2",
+              "name": "Wheat",
+              "category": "Grains",
+              "price": 450,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 800,
+              "available_quantity": 800,
+              "producer": "Northern Wheat Farmers",
+              "location": "Northern Province",
+              "province": "Northern Province",
+              "status": "available",
+              "description": "Premium wheat grain with high protein content. Perfect for bread making and pasta production.",
+              "image": "��",
+              "min_order": 25,
+              "max_order": 300,
+              "harvest_date": "2024-08-10",
+              "quality": "premium",
+              "features": ["high_protein", "bread_making", "pasta_production"]
+            },
+            {
+              "id": "3",
+              "name": "Rice",
+              "category": "Grains",
+              "price": 650,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 600,
+              "available_quantity": 600,
+              "producer": "Eastern Rice Collective",
+              "location": "Eastern Province",
+              "province": "Eastern Province",
+              "status": "available",
+              "description": "Long grain rice with excellent cooking properties. Clean, well-milled rice ready for consumption.",
+              "image": "��",
+              "min_order": 5,
+              "max_order": 200,
+              "harvest_date": "2024-08-12",
+              "quality": "standard",
+              "features": ["long_grain", "excellent_cooking", "clean", "well_milled"]
+            }
+          ]
+        },
+        {
+          "id": "legumes",
+          "name": "Legumes",
+          "description": "Beans, peas, and other legumes",
+          "icon": "🫘",
+          "products": [
+            {
+              "id": "4",
+              "name": "Beans",
+              "category": "Legumes",
+              "price": 800,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 750,
+              "available_quantity": 750,
+              "producer": "Southern Bean Farmers",
+              "location": "Southern Province",
+              "province": "Southern Province",
+              "status": "available",
+              "description": "Red kidney beans rich in protein and fiber. Clean, sorted beans perfect for cooking.",
+              "image": "��",
+              "min_order": 5,
+              "max_order": 150,
+              "harvest_date": "2024-08-08",
+              "quality": "standard",
+              "features": ["red_kidney", "high_protein", "high_fiber", "clean", "sorted"]
+            }
+          ]
+        },
+        {
+          "id": "vegetables",
+          "name": "Vegetables",
+          "description": "Fresh vegetables and greens",
+          "icon": "🥬",
+          "products": [
+            {
+              "id": "5",
+              "name": "Tomatoes",
+              "category": "Vegetables",
+              "price": 250,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 400,
+              "available_quantity": 400,
+              "producer": "Kigali Vegetable Hub",
+              "location": "Kigali City",
+              "province": "Kigali City",
+              "status": "available",
+              "description": "Fresh, ripe tomatoes perfect for cooking and salads. Grown using sustainable farming methods.",
+              "image": "��",
+              "min_order": 2,
+              "max_order": 100,
+              "harvest_date": "2024-08-16",
+              "quality": "premium",
+              "features": ["fresh", "ripe", "cooking", "salads", "sustainable_farming"]
+            }
+          ]
+        },
+        {
+          "id": "fruits",
+          "name": "Fruits",
+          "description": "Fresh fruits and berries",
+          "icon": "🍎",
+          "products": [
+            {
+              "id": "6",
+              "name": "Bananas",
+              "category": "Fruits",
+              "price": 180,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 900,
+              "available_quantity": 900,
+              "producer": "Western Banana Cooperative",
+              "location": "Western Province",
+              "province": "Western Province",
+              "status": "available",
+              "description": "Sweet, ripe bananas perfect for eating or cooking. Available in various ripeness levels.",
+              "image": "��",
+              "min_order": 5,
+              "max_order": 200,
+              "harvest_date": "2024-08-14",
+              "quality": "standard",
+              "features": ["sweet", "ripe", "eating", "cooking", "various_ripeness"]
+            }
+          ]
+        },
+        {
+          "id": "cash-crops",
+          "name": "Cash Crops",
+          "description": "Coffee, tea, and other cash crops",
+          "icon": "☕",
+          "products": [
+            {
+              "id": "7",
+              "name": "Coffee Beans",
+              "category": "Cash Crops",
+              "price": 950,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 500,
+              "available_quantity": 500,
+              "producer": "Kigali Coffee Cooperative",
+              "location": "Kigali City",
+              "province": "Kigali City",
+              "status": "available",
+              "description": "Premium Arabica coffee beans with rich flavor profile. Perfect for specialty coffee production.",
+              "image": "☕",
+              "min_order": 1,
+              "max_order": 100,
+              "harvest_date": "2024-08-05",
+              "quality": "premium",
+              "features": ["arabica", "rich_flavor", "specialty_coffee", "premium_quality"]
+            }
+          ]
+        },
+        {
+          "id": "root-vegetables",
+          "name": "Root Vegetables",
+          "description": "Potatoes, cassava, and other roots",
+          "icon": "🥔",
+          "products": [
+            {
+              "id": "8",
+              "name": "Sweet Potatoes",
+              "category": "Root Vegetables",
+              "price": 200,
+              "currency": "RWF",
+              "unit": "kg",
+              "quantity": 650,
+              "available_quantity": 650,
+              "producer": "Central Root Farmers",
+              "location": "Central Province",
+              "province": "Central Province",
+              "status": "available",
+              "description": "Fresh sweet potatoes rich in nutrients. Perfect for both human consumption and animal feed.",
+              "image": "��",
+              "min_order": 10,
+              "max_order": 300,
+              "harvest_date": "2024-08-11",
+              "quality": "standard",
+              "features": ["fresh", "nutrient_rich", "human_consumption", "animal_feed"]
+            }
+          ]
+        }
+      ],
+      
+      "features": {
+        "search": {
+          "enabled": true,
+          "search_fields": ["product_name", "description", "category", "producer"],
+          "filters": {
+            "category": true,
+            "price_range": true,
+            "quality": true,
+            "availability": true,
+            "location": true
+          },
+          "sorting": {
+            "price_asc": "Price: Low to High",
+            "price_desc": "Price: High to Low",
+            "name_asc": "Name: A to Z",
+            "name_desc": "Name: Z to A",
+            "date_desc": "Newest First",
+            "popularity": "Most Popular"
+          }
+        },
+        "cart": {
+          "enabled": true,
+          "features": ["add_items", "remove_items", "quantity_adjustment", "total_calculation", "item_count"]
+        },
+        "wishlist": {
+          "enabled": true,
+          "features": ["add_items", "remove_items", "view_list"]
+        }
+      },
+      
+      "payment_methods": [
+        {
+          "id": "momo",
+          "name": "MTN Mobile Money (Momo)",
+          "type": "mobile_money",
+          "provider": "MTN",
+          "requirements": ["phone_number", "pin"],
+          "process": [
+            "Enter Momo phone number",
+            "Enter Momo PIN",
+            "Receive USSD prompt on phone",
+            "Confirm transaction on phone"
+          ],
+          "branding": {
+            "color": "yellow",
+            "icon": "📱"
+          }
+        },
+        {
+          "id": "airtel",
+          "name": "Airtel Money",
+          "type": "mobile_money",
+          "provider": "Airtel",
+          "requirements": ["phone_number", "pin"],
+          "process": [
+            "Enter Airtel Money phone number",
+            "Enter Airtel Money PIN",
+            "Receive USSD prompt on phone",
+            "Confirm transaction on phone"
+          ],
+          "branding": {
+            "color": "red",
+            "icon": "📱"
+          }
+        }
+      ],
+      
+      "checkout_process": {
+        "steps": [
+          {
+            "step": 1,
+            "name": "delivery_details",
+            "title": "Delivery Details",
+            "fields": [
+              {"name": "fullName", "type": "text", "required": true, "placeholder": "Enter your full name"},
+              {"name": "phone", "type": "tel", "required": true, "placeholder": "07X XXX XXXX"},
+              {"name": "email", "type": "email", "required": false, "placeholder": "Enter your email"},
+              {"name": "deliveryAddress", "type": "text", "required": true, "placeholder": "Enter your delivery address"},
+              {"name": "deliveryInstructions", "type": "text", "required": false, "placeholder": "Any special delivery instructions"}
+            ]
+          },
+          {
+            "step": 2,
+            "name": "payment_method",
+            "title": "Payment Method",
+            "description": "Choose between MTN Momo and Airtel Money"
+          },
+          {
+            "step": 3,
+            "name": "processing",
+            "title": "Processing Payment",
+            "description": "Payment verification and order confirmation"
+          },
+          {
+            "step": 4,
+            "name": "success",
+            "title": "Payment Successful",
+            "description": "Order confirmed and payment received"
+          }
+        ]
+      },
+      
+      "delivery": {
+        "standard_delivery": "2-3 business days",
+        "free_delivery_threshold": 10000,
+        "free_delivery_currency": "RWF",
+        "coverage": "All 29 districts in Rwanda",
+        "delivery_instructions": "Can be added during checkout"
+      },
+      
+      "user_roles": {
+        "buyers": {
+          "permissions": [
+            "browse_products",
+            "search_and_filter",
+            "add_to_cart",
+            "manage_wishlist",
+            "complete_checkout",
+            "view_order_history"
+          ]
+        },
+        "producers_farmers": {
+          "permissions": [
+            "list_products",
+            "manage_inventory",
+            "set_pricing",
+            "track_sales",
+            "manage_orders"
+          ]
+        },
+        "admins": {
+          "permissions": [
+            "full_backend_access",
+            "analytics_dashboard",
+            "data_management",
+            "user_management",
+            "reporting"
+          ]
+        }
+      },
+      
+      "technical_specs": {
+        "framework": "Next.js 15",
+        "react_version": "React 19",
+        "styling": "Tailwind CSS",
+        "theme": "Dark mode with slate colors",
+        "responsive": "Mobile-first design",
+        "typescript": true
+      },
+      
+      "sample_queries": {
+        "product_information": [
+          "What types of grains are available?",
+          "How much does coffee cost per kg?",
+          "Where can I find fresh tomatoes?",
+          "What's the quality of the maize?"
+        ],
+        "shopping_cart": [
+          "How do I add products to my cart?",
+          "Can I save products for later?",
+          "What's the minimum order quantity for beans?",
+          "How do I remove items from my cart?"
+        ],
+        "payment_checkout": [
+          "What payment methods do you accept?",
+          "How do I pay with Momo?",
+          "Is Airtel Money supported?",
+          "How long does payment processing take?"
+        ],
+        "delivery_shipping": [
+          "How long does delivery take?",
+          "Is delivery free?",
+          "Do you deliver to all provinces?",
+          "Can I add delivery instructions?"
+        ],
+        "account_orders": [
+          "How do I track my order?",
+          "Can I cancel an order?",
+          "What's my order history?",
+          "How do I contact support?"
+        ]
+      }
+    }
+  }

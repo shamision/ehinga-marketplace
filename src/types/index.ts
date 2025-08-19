@@ -4,6 +4,8 @@ export interface User {
   email: string
   role: 'farmer' | 'buyer' | 'admin' | 'staff'
   avatar?: string
+  phone?: string
+  location?: string
 }
 
 export interface AlertItem {
@@ -41,4 +43,69 @@ export interface Product {
   producer: string
   location: string
   status: 'available' | 'sold' | 'expired'
+  description?: string
+  image?: string
+  minOrder?: number
+  maxOrder?: number
+  harvestDate?: string
+  quality?: 'premium' | 'standard' | 'basic'
+}
+
+export interface CartItem {
+  id: string
+  productId: string
+  product: Product
+  quantity: number
+  addedAt: Date
+}
+
+export interface Order {
+  id: string
+  userId: string
+  items: CartItem[]
+  total: number
+  status: 'pending' | 'confirmed' | 'processing' | 'shipped' | 'delivered' | 'cancelled'
+  paymentStatus: 'pending' | 'paid' | 'failed' | 'refunded'
+  paymentMethod: 'momo' | 'airtel' | 'cash'
+  createdAt: Date
+  updatedAt: Date
+  deliveryAddress?: string
+  deliveryInstructions?: string
+}
+
+export interface PaymentMethod {
+  id: string
+  type: 'momo' | 'airtel'
+  name: string
+  phoneNumber: string
+  isDefault: boolean
+}
+
+export interface PaymentTransaction {
+  id: string
+  orderId: string
+  amount: number
+  method: 'momo' | 'airtel'
+  status: 'pending' | 'processing' | 'completed' | 'failed'
+  reference: string
+  createdAt: Date
+  completedAt?: Date
+}
+
+export interface ProductCategory {
+  id: string
+  name: string
+  description: string
+  icon: string
+  parentId?: string
+}
+
+export interface SearchFilters {
+  category?: string
+  priceRange?: [number, number]
+  location?: string
+  quality?: string
+  availability?: boolean
+  sortBy?: 'price' | 'name' | 'date' | 'popularity'
+  sortOrder?: 'asc' | 'desc'
 }
