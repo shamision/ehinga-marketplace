@@ -1,6 +1,6 @@
 "use client"
 
-import React, { useState } from 'react'
+import React, { useEffect, useMemo, useState } from 'react'
 import { Sidebar } from '@/components/layout/sidebar'
 import { Button } from '@/components/ui/button'
 import { Send, Mic, Image as ImageIcon, Paperclip, Smile, Camera, MoreVertical, Bot, User } from 'lucide-react'
@@ -13,6 +13,13 @@ interface ChatMessage {
 }
 
 export default function ChatbotPage() {
+  const apiBaseUrl = useMemo(
+    () => process.env.NEXT_PUBLIC_CHATBOT_API_URL ?? 'https://e-hinga-chatbot-production.up.railway.app',
+    []
+  )
+
+  const [apiStatus, setApiStatus] = useState<'checking' | 'online' | 'offline'>('checking')
+  const [isSending, setIsSending] = useState(false)
   const [messages, setMessages] = useState<ChatMessage[]>([
     {
       id: 'm1',
@@ -38,27 +45,82 @@ export default function ChatbotPage() {
 
   const [input, setInput] = useState('')
 
-  function handleSend(e: React.FormEvent) {
+  useEffect(() => {
+    // Basic health check (non-blocking)
+    const controller = new AbortController()
+    const check = async () => {
+      try {
+        setApiStatus('checking')
+        const res = await fetch(`${apiBaseUrl}/health`, { cache: 'no-store', signal: controller.signal })
+        setApiStatus(res.ok ? 'online' : 'offline')
+      } catch {
+        setApiStatus('offline')
+      }
+    }
+    void check()
+    return () => controller.abort()
+  }, [apiBaseUrl])
+
+  async function handleSend(e: React.FormEvent) {
     e.preventDefault()
     const trimmed = input.trim()
-    if (!trimmed) return
+    if (!trimmed || isSending) return
 
+    const now = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })
     const userMessage: ChatMessage = {
       id: `u-${Date.now()}`,
       role: 'user',
       content: trimmed,
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      time: now,
     }
 
-    const assistantMessage: ChatMessage = {
-      id: `a-${Date.now()}`,
+    const pendingAssistant: ChatMessage = {
+      id: `a-${Date.now() + 1}`,
       role: 'assistant',
-      content: 'This is a placeholder response. I will soon be connected to live data.',
-      time: new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+      content: 'Thinking…',
+      time: now,
     }
 
-    setMessages((prev) => [...prev, userMessage, assistantMessage])
+    setMessages((prev) => [...prev, userMessage, pendingAssistant])
     setInput('')
+    setIsSending(true)
+
+    try {
+      const res = await fetch(`${apiBaseUrl}/chat`, {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ message: trimmed }),
+      })
+
+      let replyText = ''
+      const contentType = res.headers.get('content-type') ?? ''
+      if (contentType.includes('application/json')) {
+        const data = await res.json()
+        // Accept several possible shapes from the API
+        replyText =
+          data?.reply ?? data?.message ?? data?.content ?? (typeof data === 'string' ? data : JSON.stringify(data))
+      } else {
+        replyText = await res.text()
+      }
+
+      if (!res.ok) {
+        throw new Error(replyText || 'Request failed')
+      }
+
+      setMessages((prev) =>
+        prev.map((m) => (m.id === pendingAssistant.id ? { ...m, content: replyText || 'No response' } : m))
+      )
+    } catch (err: unknown) {
+      const fallback = err instanceof Error ? err.message : 'Failed to reach assistant service.'
+      setMessages((prev) =>
+        prev.map((m) => (m.id === pendingAssistant.id ? { ...m, content: `Error: ${fallback}` } : m))
+      )
+      setApiStatus('offline')
+    } finally {
+      setIsSending(false)
+    }
   }
 
   return (
@@ -76,7 +138,11 @@ export default function ChatbotPage() {
                 </div>
                 <div>
                   <div className="text-slate-100 font-semibold">Assistant</div>
-                  <div className="text-xs text-slate-400">Last seen just now</div>
+                  <div className="text-xs text-slate-400">
+                    {apiStatus === 'checking' && 'Checking connection…'}
+                    {apiStatus === 'online' && 'Online'}
+                    {apiStatus === 'offline' && 'Offline'}
+                  </div>
                 </div>
               </div>
               <div className="flex items-center gap-4 text-slate-300">
@@ -119,7 +185,7 @@ export default function ChatbotPage() {
             {/* Composer */}
             <div className="px-6 py-4 border-t border-slate-700/60 bg-slate-900/60">
               <form onSubmit={handleSend} className="flex items-center gap-3">
-                <Button type="submit" size="icon" className="rounded-full h-11 w-11">
+                <Button type="submit" size="icon" className="rounded-full h-11 w-11" disabled={isSending}>
                   <Send className="w-5 h-5" />
                 </Button>
                 <input
@@ -127,6 +193,7 @@ export default function ChatbotPage() {
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="...Say something"
                   className="flex-1 px-4 py-2 h-11 rounded-full bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  disabled={isSending}
                 />
                 <div className="flex items-center gap-2 text-slate-300">
                   <button type="button" className="h-10 w-10 rounded-full bg-slate-800 border border-slate-700 flex items-center justify-center">
