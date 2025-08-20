@@ -28,19 +28,6 @@ export default function ChatbotPage() {
         'Welcome to the e‑Hinga assistant. How can I help you today? You can ask about market prices, producer availability, or trading centers.',
       time: '09:25',
     },
-    {
-      id: 'm2',
-      role: 'assistant',
-      content:
-        'It looks like you have a lot planned this week. If you are preparing a market report, consider fetching the latest coffee and maize prices.',
-      time: '09:28',
-    },
-    {
-      id: 'm3',
-      role: 'user',
-      content: 'Could you summarize the latest alerts for Kigali markets?',
-      time: '09:41',
-    },
   ])
 
   const [input, setInput] = useState('')
@@ -100,9 +87,21 @@ export default function ChatbotPage() {
         const data = await res.json()
         // Accept several possible shapes from the API
         replyText =
-          data?.reply ?? data?.message ?? data?.content ?? (typeof data === 'string' ? data : JSON.stringify(data))
+          data?.reply ??
+          data?.message ??
+          data?.content ??
+          data?.response ??
+          data?.text ??
+          (typeof data === 'string' ? data : JSON.stringify(data))
       } else {
-        replyText = await res.text()
+        // Try to parse text payloads that actually contain JSON
+        const raw = await res.text()
+        try {
+          const asJson = JSON.parse(raw)
+          replyText = asJson?.response ?? asJson?.reply ?? asJson?.message ?? asJson?.content ?? raw
+        } catch {
+          replyText = raw
+        }
       }
 
       if (!res.ok) {
