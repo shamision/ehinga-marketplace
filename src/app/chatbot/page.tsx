@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState } from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Button } from "@/components/ui/button";
 import {
@@ -47,13 +47,11 @@ export default function ChatbotPage() {
   ]);
 
   const [input, setInput] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
-  const [error, setError] = useState<string | null>(null);
 
-  async function handleSend(e: React.FormEvent) {
+  function handleSend(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = input.trim();
-    if (!trimmed || isLoading) return;
+    if (!trimmed) return;
 
     const userMessage: ChatMessage = {
       id: `u-${Date.now()}`,
@@ -65,59 +63,19 @@ export default function ChatbotPage() {
       }),
     };
 
-    setMessages((prev) => [...prev, userMessage]);
+    const assistantMessage: ChatMessage = {
+      id: `a-${Date.now()}`,
+      role: "assistant",
+      content:
+        "This is a placeholder response. I will soon be connected to live data.",
+      time: new Date().toLocaleTimeString([], {
+        hour: "2-digit",
+        minute: "2-digit",
+      }),
+    };
+
+    setMessages((prev) => [...prev, userMessage, assistantMessage]);
     setInput("");
-    setError(null);
-    setIsLoading(true);
-
-    try {
-      const response = await fetch(
-        "https://ehinga-chatbot-api-k5qcd3bmma-uc.a.run.app/chat",
-        {
-          method: "POST",
-          headers: {
-            "Content-Type": "application/json",
-          },
-          body: JSON.stringify({ message: trimmed }),
-        }
-      );
-
-      if (!response.ok) {
-        throw new Error(`Chat service error (${response.status})`);
-      }
-
-      const data: { response?: string } = await response.json();
-
-      const assistantMessage: ChatMessage = {
-        id: `a-${Date.now()}`,
-        role: "assistant",
-        content:
-          data.response?.trim() || "The assistant returned an empty response.",
-        time: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-
-      setMessages((prev) => [...prev, assistantMessage]);
-    } catch (err) {
-      const fallbackMessage: ChatMessage = {
-        id: `a-${Date.now()}`,
-        role: "assistant",
-        content:
-          "Sorry, I was unable to reach the assistant service. Please try again.",
-        time: new Date().toLocaleTimeString([], {
-          hour: "2-digit",
-          minute: "2-digit",
-        }),
-      };
-      setMessages((prev) => [...prev, fallbackMessage]);
-      setError(
-        err instanceof Error ? err.message : "Unexpected error occurred."
-      );
-    } finally {
-      setIsLoading(false);
-    }
   }
 
   return (
@@ -192,28 +150,19 @@ export default function ChatbotPage() {
 
             {/* Composer */}
             <div className="px-6 py-4 border-t border-slate-700/60 bg-slate-900/60">
-              {error && (
-                <div className="mb-3 text-sm text-red-400 text-center">
-                  {error}
-                </div>
-              )}
               <form onSubmit={handleSend} className="flex items-center gap-3">
                 <Button
                   type="submit"
                   size="icon"
                   className="rounded-full h-11 w-11"
-                  disabled={isLoading}
                 >
                   <Send className="w-5 h-5" />
                 </Button>
                 <input
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
-                  placeholder={
-                    isLoading ? "Waiting for assistant..." : "...Say something"
-                  }
+                  placeholder="...Say something"
                   className="flex-1 px-4 py-2 h-11 rounded-full bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
-                  disabled={isLoading}
                 />
                 <div className="flex items-center gap-2 text-slate-300">
                   <button

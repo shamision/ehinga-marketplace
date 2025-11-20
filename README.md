@@ -1,36 +1,59 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# e-Hinga Marketplace Platform
 
-## Getting Started
+A comprehensive agricultural marketplace platform for Rwanda, built with Next.js 15. This platform connects producers, buyers, and traders in Rwanda's agricultural sector, providing real-time market insights and facilitating trade.
 
-First, run the development server:
+## 🌐 Live Application
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+**Web App**: [https://ehinga-marketplace.vercel.app/](https://ehinga-marketplace.vercel.app/)
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+## 🌾 Features
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+- **Interactive Dashboard**: Real-time analytics with revenue trends, value chain distribution, and market performance
+- **Marketplace**: Browse and purchase agricultural products from local producers
+- **AI Chatbot**: Smart assistant integrated with Railway API for market intelligence
+- **Payment Processing**: Mobile money integration (MTN Mobile Money & Airtel Money)
+- **THRIVE 2030 Metrics**: Impact indicators and progress tracking
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+## 🛠️ Getting Started
 
-## Learn More
+### Prerequisites
+- Node.js 18+ 
+- npm, yarn, pnpm, or bun
 
-To learn more about Next.js, take a look at the following resources:
+### Installation
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/shamision/ehinga-marketplace.git
+   cd ehinga-marketplace
+   ```
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+2. **Install dependencies**
+   ```bash
+   npm install
+   ```
 
-## Deploy on Vercel
+3. **Set up environment variables**
+   Create a `.env.local` file in the root directory:
+   ```bash
+   NEXT_PUBLIC_CHATBOT_API_URL=https://e-hinga-chatbot-production.up.railway.app
+   ```
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+4. **Run the development server**
+   ```bash
+   npm run dev
+   ```
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+5. **Open your browser**
+   Navigate to [http://localhost:3000](http://localhost:3000)
+
+## 🚀 Tech Stack
+
+- **Framework**: Next.js 15 with App Router
+- **Language**: TypeScript
+- **Styling**: Tailwind CSS
+- **Charts**: Recharts
+- **Deployment**: Vercel
+
+---
+
