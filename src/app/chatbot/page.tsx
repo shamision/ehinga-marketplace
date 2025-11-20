@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Sidebar } from "@/components/layout/sidebar";
 import { Button } from "@/components/ui/button";
 import {
@@ -21,6 +21,10 @@ interface ChatMessage {
   content: string;
   time?: string;
 }
+
+const CHATBOT_API_URL =
+  process.env.NEXT_PUBLIC_CHATBOT_API_URL ??
+  "https://ehinga-chatbot-api-k5qcd3bmma-uc.a.run.app";
 
 export default function ChatbotPage() {
   const [messages, setMessages] = useState<ChatMessage[]>([
@@ -47,8 +51,17 @@ export default function ChatbotPage() {
   ]);
 
   const [input, setInput] = useState("");
+  const [isLoading, setIsLoading] = useState(false);
+  const [error, setError] = useState<string | null>(null);
 
-  function handleSend(e: React.FormEvent) {
+  function getTimeStamp() {
+    return new Date().toLocaleTimeString([], {
+      hour: "2-digit",
+      minute: "2-digit",
+    });
+  }
+
+  async function handleSend(e: React.FormEvent) {
     e.preventDefault();
     const trimmed = input.trim();
     if (!trimmed) return;
@@ -57,25 +70,60 @@ export default function ChatbotPage() {
       id: `u-${Date.now()}`,
       role: "user",
       content: trimmed,
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
+      time: getTimeStamp(),
     };
 
-    const assistantMessage: ChatMessage = {
-      id: `a-${Date.now()}`,
-      role: "assistant",
-      content:
-        "This is a placeholder response. I will soon be connected to live data.",
-      time: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-    };
-
-    setMessages((prev) => [...prev, userMessage, assistantMessage]);
+    setMessages((prev) => [...prev, userMessage]);
     setInput("");
+    setError(null);
+    setIsLoading(true);
+
+    try {
+      const response = await fetch(`${CHATBOT_API_URL}/chat`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ message: trimmed }),
+      });
+
+      if (!response.ok) {
+        throw new Error(
+          `Chatbot request failed (${response.status}). Please try again.`
+        );
+      }
+
+      const data = await response.json();
+      const assistantContent =
+        typeof data === "string"
+          ? data
+          : data?.response ?? data?.message ?? "I could not process that.";
+
+      const assistantMessage: ChatMessage = {
+        id: `a-${Date.now()}`,
+        role: "assistant",
+        content: assistantContent,
+        time: getTimeStamp(),
+      };
+
+      setMessages((prev) => [...prev, assistantMessage]);
+    } catch (err) {
+      const fallbackMessage: ChatMessage = {
+        id: `a-${Date.now()}`,
+        role: "assistant",
+        content:
+          "Sorry, I could not contact the chatbot service right now. Please try again in a moment.",
+        time: getTimeStamp(),
+      };
+      setMessages((prev) => [...prev, fallbackMessage]);
+      if (err instanceof Error) {
+        setError(err.message);
+      } else {
+        setError("Unknown error occurred while contacting the chatbot.");
+      }
+    } finally {
+      setIsLoading(false);
+    }
   }
 
   return (
@@ -150,11 +198,20 @@ export default function ChatbotPage() {
 
             {/* Composer */}
             <div className="px-6 py-4 border-t border-slate-700/60 bg-slate-900/60">
+              {error && (
+                <div className="mb-2 text-sm text-red-400">{error}</div>
+              )}
+              {isLoading && !error && (
+                <div className="mb-2 text-xs text-slate-400">
+                  Assistant is typing…
+                </div>
+              )}
               <form onSubmit={handleSend} className="flex items-center gap-3">
                 <Button
                   type="submit"
                   size="icon"
                   className="rounded-full h-11 w-11"
+                  disabled={isLoading}
                 >
                   <Send className="w-5 h-5" />
                 </Button>
@@ -162,7 +219,8 @@ export default function ChatbotPage() {
                   value={input}
                   onChange={(e) => setInput(e.target.value)}
                   placeholder="...Say something"
-                  className="flex-1 px-4 py-2 h-11 rounded-full bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50"
+                  disabled={isLoading}
+                  className="flex-1 px-4 py-2 h-11 rounded-full bg-slate-800 border border-slate-700 text-slate-100 placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-primary/50 disabled:opacity-60"
                 />
                 <div className="flex items-center gap-2 text-slate-300">
                   <button

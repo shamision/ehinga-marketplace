@@ -17,29 +17,34 @@ A comprehensive agricultural marketplace platform for Rwanda, built with Next.js
 ## 🛠️ Getting Started
 
 ### Prerequisites
-- Node.js 18+ 
+
+- Node.js 18+
 - npm, yarn, pnpm, or bun
 
 ### Installation
 
 1. **Clone the repository**
+
    ```bash
    git clone https://github.com/shamision/ehinga-marketplace.git
    cd ehinga-marketplace
    ```
 
 2. **Install dependencies**
+
    ```bash
    npm install
    ```
 
 3. **Set up environment variables**
    Create a `.env.local` file in the root directory:
+
    ```bash
-   NEXT_PUBLIC_CHATBOT_API_URL=https://e-hinga-chatbot-production.up.railway.app
+   NEXT_PUBLIC_CHATBOT_API_URL=https://ehinga-chatbot-api-k5qcd3bmma-uc.a.run.app
    ```
 
 4. **Run the development server**
+
    ```bash
    npm run dev
    ```
@@ -56,4 +61,3 @@ A comprehensive agricultural marketplace platform for Rwanda, built with Next.js
 - **Deployment**: Vercel
 
 ---
-
